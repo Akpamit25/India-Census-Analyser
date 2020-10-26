@@ -24,13 +24,9 @@ public class CSVStateCensus {
 		checkDelimiter(csvFilePath);
 		checkHeader(csvFilePath);
 		try {
-			//Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));
-			Reader reader = new BufferedReader(new InputStreamReader(new FileInputStream(csvFilePath),"utf-8"));
-
+			Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));
 			Iterator<IndianCensusCSV> censusCsvIterator = getCSVFileIterator(reader, IndianCensusCSV.class);
-			Iterable<IndianCensusCSV> csvIterable = () -> censusCsvIterator;
-			int numOfEntries = (int) StreamSupport.stream(csvIterable.spliterator(), false).count();
-			return numOfEntries;
+			return this.getCount(censusCsvIterator);
 
 		} catch (IOException e) {
 			throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.WRONG_FILE_PATH);
@@ -81,9 +77,7 @@ public class CSVStateCensus {
 		try {
 			Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));
 			Iterator<IndianStateCodeCSV> censusCsvIterator = getCSVFileIterator(reader, IndianStateCodeCSV.class);
-			Iterable<IndianStateCodeCSV> csvIterable = () -> censusCsvIterator;
-			int numOfEntries = (int) StreamSupport.stream(csvIterable.spliterator(), false).count();
-			return numOfEntries;
+			return this.getCount(censusCsvIterator);
 		} catch (IOException e) {
 			throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.WRONG_FILE_PATH);
 		}
@@ -130,6 +124,13 @@ public class CSVStateCensus {
 			throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.WRONG_FILE_TYPE);
 		}
 
+	}
+
+	private <E> int getCount(Iterator<E> iterator) {
+		int numOfEntries = 0;
+		Iterable<E> csvIterable = () -> iterator;
+		numOfEntries = (int) StreamSupport.stream(csvIterable.spliterator(), false).count();
+		return numOfEntries;
 	}
 
 }
