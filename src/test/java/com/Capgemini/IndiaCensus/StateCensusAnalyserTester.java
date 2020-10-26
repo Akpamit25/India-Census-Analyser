@@ -3,7 +3,6 @@ package com.Capgemini.IndiaCensus;
 import static org.junit.Assert.*;
 import exception.CensusAnalyserException;
 import exception.CensusAnalyserException.ExceptionType;
-
 import org.junit.Test;
 
 public class StateCensusAnalyserTester {
@@ -18,6 +17,7 @@ public class StateCensusAnalyserTester {
 		} catch (CensusAnalyserException e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 	@Test
@@ -29,6 +29,7 @@ public class StateCensusAnalyserTester {
 		} catch (CensusAnalyserException e) {
 			assertEquals(ExceptionType.FILE_INCORRECT, e.getExceptionType());
 		}
+		
 	}
 
 	@Test
@@ -40,6 +41,7 @@ public class StateCensusAnalyserTester {
 		} catch (CensusAnalyserException e) {
 			assertEquals(ExceptionType.FILE_TYPE_INCORRECT, e.getExceptionType());
 		}
+		
 	}
 
 	@Test
@@ -51,6 +53,7 @@ public class StateCensusAnalyserTester {
 		} catch (CensusAnalyserException e) {
 			assertEquals(ExceptionType.DELIMITER_INCORRECT, e.getExceptionType());
 		}
+		
 	}
 
 	@Test
@@ -62,6 +65,7 @@ public class StateCensusAnalyserTester {
 		} catch (CensusAnalyserException e) {
 			assertEquals(ExceptionType.HEADER_INCORRECT, e.getExceptionType());
 		}
+		
 	}
 
 	@Test
@@ -74,6 +78,7 @@ public class StateCensusAnalyserTester {
 		} catch (CensusAnalyserException e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 	@Test
@@ -85,6 +90,7 @@ public class StateCensusAnalyserTester {
 		} catch (CensusAnalyserException e) {
 			assertEquals(ExceptionType.FILE_INCORRECT, e.getExceptionType());
 		}
+		
 	}
 
 	@Test
@@ -96,6 +102,7 @@ public class StateCensusAnalyserTester {
 		} catch (CensusAnalyserException e) {
 			assertEquals(ExceptionType.FILE_TYPE_INCORRECT, e.getExceptionType());
 		}
+		
 	}
 
 	@Test
@@ -107,6 +114,7 @@ public class StateCensusAnalyserTester {
 		} catch (CensusAnalyserException e) {
 			assertEquals(ExceptionType.DELIMITER_INCORRECT, e.getExceptionType());
 		}
+		
 	}
 
 	@Test
@@ -118,6 +126,7 @@ public class StateCensusAnalyserTester {
 		} catch (CensusAnalyserException e) {
 			assertEquals(ExceptionType.HEADER_INCORRECT, e.getExceptionType());
 		}
+		
 	}
 
 }
