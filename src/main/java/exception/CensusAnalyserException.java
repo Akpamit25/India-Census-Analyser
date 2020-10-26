@@ -1,25 +1,20 @@
 package exception;
 
+@SuppressWarnings("serial")
 public class CensusAnalyserException extends Exception {
-	public enum ExceptionType {
-		WRONG_FILE_PATH, WRONG_FILE_TYPE, WRONG_DELIMITER_TYPE, WRONG_HEADER;
-	}
-
+	
+	public enum ExceptionType{
+		FILE_INCORRECT,FILE_TYPE_INCORRECT,DELIMITER_INCORRECT,HEADER_INCORRECT };
+	
 	ExceptionType type;
-
-	public CensusAnalyserException(ExceptionType type) {
-
-		this.type = type;
-	}
-
-	public CensusAnalyserException(String message, ExceptionType type) {
+	
+	public CensusAnalyserException(String message,ExceptionType type){
 		super(message);
-		this.type = type;
-
+		this.type=type;
 	}
-
+	
 	public ExceptionType getExceptionType() {
-		return type;
+		return this.type;
 	}
 
 }

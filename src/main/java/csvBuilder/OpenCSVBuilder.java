@@ -6,19 +6,9 @@ import java.util.Iterator;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
-import exception.CensusAnalyserException;
-
-public class OpenCSVBuilder {
-	public <E> Iterator<E> getCSVFileIterator(Reader reader, Class csvClass) throws CensusAnalyserException {
-		try {
-			CsvToBeanBuilder<E> csvToBeanBuilder = new CsvToBeanBuilder<>(reader);
-			csvToBeanBuilder.withType(csvClass);
-			csvToBeanBuilder.withIgnoreLeadingWhiteSpace(true);
-			CsvToBean<E> csvToBean = csvToBeanBuilder.build();
-			return csvToBean.iterator();
-		} catch (IllegalStateException e) {
-			throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.WRONG_FILE_TYPE);
-		}
-
+public class OpenCSVBuilder<E> implements ICSVBuilder<E> {
+	public Iterator<E> getCSVFileIterator(Reader reader,Class<E> csvClass) throws CSVBuilderException{
+		CsvToBean<E> csvToBean=new CsvToBeanBuilder(reader).withType(csvClass).withIgnoreLeadingWhiteSpace(true).build();
+		return csvToBean.iterator();
 	}
 }
