@@ -1,4 +1,4 @@
-package service;
+package csvBuilder;
 
 import java.io.Reader;
 import java.util.Iterator;
