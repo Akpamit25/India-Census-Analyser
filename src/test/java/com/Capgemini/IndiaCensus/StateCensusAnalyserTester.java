@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import exception.CensusAnalyserException;
 import exception.CensusAnalyserException.ExceptionType;
 import service.CSVStateCensus;
+import service.CSVStateCode;
 
 import org.junit.Test;
 import java.util.List;
@@ -144,6 +145,14 @@ import org.junit.Before;
 		List<CSVStateCensus> returnedList= stateCensusAnalyser.sortStateCensusDataAccordingToStateInAlphabeticalOrder("D:\\Capg_Bridgelabz\\IndiaCensus\\StateCensusData.csv");
 		assertEquals("Andaman and Nicobar Islands",returnedList.get(0).state);
 		assertEquals("West Bengal",returnedList.get(returnedList.size()-1).state);
+		
+	}
+	
+	@Test
+	public void GivenCensusCSVData_WhenSortedAccordingToStateCode_ShouldReturnSortedList() {
+		List<CSVStateCode> returnedList=stateCensusAnalyser.sortStateCodeCensusDataAccordingToStateCode("D:\\Capg_Bridgelabz\\IndiaCensus\\StateCode.csv");
+		assertEquals("AN",returnedList.get(0).stateCode);
+     	assertEquals("WB",returnedList.get(returnedList.size()-1).stateCode);
 		
 	}
 
