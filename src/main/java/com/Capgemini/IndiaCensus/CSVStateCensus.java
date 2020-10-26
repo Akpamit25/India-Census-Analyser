@@ -13,7 +13,7 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import service.IndianCensusCSV;
 import service.IndianStateCodeCSV;
-import service.OpenCSVBuilder;
+import csvBuilder.*;
 
 public class CSVStateCensus {
 	public int loadIndiaCensusData(String csvFilePath) throws CensusAnalyserException, IOException {
@@ -26,8 +26,8 @@ public class CSVStateCensus {
 		checkHeader(csvFilePath);
 		try {
 			Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));
-			Iterator<IndianCensusCSV> censusCsvIterator = new OpenCSVBuilder().getCSVFileIterator(reader,
-					IndianCensusCSV.class);
+			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
+			Iterator<IndianCensusCSV> censusCsvIterator = csvBuilder.getCSVFileIterator(reader, IndianCensusCSV.class);
 			return this.getCount(censusCsvIterator);
 
 		} catch (IOException e) {
@@ -78,7 +78,8 @@ public class CSVStateCensus {
 		checkHeaderStateCode(csvFilePath);
 		try {
 			Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));
-			Iterator<IndianStateCodeCSV> censusCsvIterator = new OpenCSVBuilder().getCSVFileIterator(reader,
+			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
+			Iterator<IndianStateCodeCSV> censusCsvIterator = csvBuilder.getCSVFileIterator(reader,
 					IndianStateCodeCSV.class);
 			return this.getCount(censusCsvIterator);
 		} catch (IOException e) {
