@@ -6,7 +6,11 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Iterator;
+import java.util.List;
 import java.util.stream.StreamSupport;
+
+import com.opencsv.bean.CsvToBeanBuilder;
+
 import exception.CensusAnalyserException;
 import exception.CensusAnalyserException.ExceptionType;
 import service.CSVStateCensus;
@@ -18,8 +22,10 @@ import service.*;
 public class StateCensusAnalyser {
 	
 	public int loadCSVData(String csvFilePath) throws CensusAnalyserException{
+		List<CSVStateCensus> CSVStateDataList;
+		
 		if(!this.checkFileExtention(csvFilePath)) {
-			throw new CensusAnalyserException("File type is not correct",CensusAnalyserException.ExceptionType.FILE_TYPE_INCORRECT); 
+			throw new CensusAnalyserException("File type is not correct",ExceptionType.FILE_TYPE_INCORRECT);
 		}
 		
 		checkForWrongDelimiter(csvFilePath);
@@ -35,20 +41,18 @@ public class StateCensusAnalyser {
 		}
 		try {
 			Reader reader=Files.newBufferedReader(Paths.get(csvFilePath));
-			ICSVBuilder csvBuilder=CSVBuilderFactory.createCSVBuilder();
-			Iterator<CSVStateCensus> csvIterator = csvBuilder.getCSVFileIterator(reader, CSVStateCensus.class);
-			return this.getCount(csvIterator);
+			CSVStateDataList = new CsvToBeanBuilder(reader).withType(CSVStateCensus.class).build().parse();
+			return CSVStateDataList.size();
 		}
 		catch(IOException e) {
-			throw new CensusAnalyserException("File path is not correct",ExceptionType.FILE_INCORRECT);
-		}
-		catch(CSVBuilderException e) {
 			throw new CensusAnalyserException("File path is not correct",ExceptionType.FILE_INCORRECT);
 		}
 		
 	}
 	
+	
 	public int loadStateCodeData(String csvFilePath) throws CensusAnalyserException{
+		List<CSVStateCode> CSVStateCodeDataList;
 		
 		if(!this.checkFileExtention(csvFilePath)) {
 			throw new CensusAnalyserException("File type is not correct",ExceptionType.FILE_TYPE_INCORRECT);
@@ -66,25 +70,15 @@ public class StateCensusAnalyser {
 		}
 		try {
 			Reader reader=Files.newBufferedReader(Paths.get(csvFilePath));
-			ICSVBuilder csvBuilder=CSVBuilderFactory.createCSVBuilder();
-			Iterator<CSVStateCode> csvIterator = csvBuilder.getCSVFileIterator(reader,CSVStateCode.class);
-			return this.getCount(csvIterator);
+			CSVStateCodeDataList = new CsvToBeanBuilder(reader).withType(CSVStateCode.class).build().parse();
+			return CSVStateCodeDataList.size();
 		}
 		catch(IOException e) {
-			throw new CensusAnalyserException("File path is not correct",ExceptionType.FILE_INCORRECT);
-		}
-		catch(CSVBuilderException e) {
 			throw new CensusAnalyserException("File path is not correct",ExceptionType.FILE_INCORRECT);
 		}
 		
 	}
 	
-	private <E> int getCount(Iterator<E> iterator) {
-		int numOfEntries=0;
-		Iterable<E> csvIterable = () -> iterator;
-		numOfEntries = (int) StreamSupport.stream(csvIterable.spliterator(), false).count();
-		return numOfEntries;
-	}
 		
 	private boolean checkFileExtention(String csvFilePath) {
 		String[] filePathComponents=csvFilePath.split("[.]");
@@ -107,4 +101,4 @@ public class StateCensusAnalyser {
 		}
 	}
 	
-}/****/
+}
