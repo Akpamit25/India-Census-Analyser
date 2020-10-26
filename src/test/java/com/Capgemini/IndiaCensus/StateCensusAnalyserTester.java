@@ -3,10 +3,20 @@ package com.Capgemini.IndiaCensus;
 import static org.junit.Assert.*;
 import exception.CensusAnalyserException;
 import exception.CensusAnalyserException.ExceptionType;
+import service.CSVStateCensus;
+
 import org.junit.Test;
+import java.util.List;
+import org.junit.Before;
 
-public class StateCensusAnalyserTester {
 
+	public class StateCensusAnalyserTester {
+		public static StateCensusAnalyser stateCensusAnalyser;
+		@Before
+		public void setUp() {
+		    stateCensusAnalyser =new StateCensusAnalyser();
+		}
+		
 	@Test
 	public void loadDataFromCsvShouldReturnCorrectNumberOfEntries() {
 		try {
@@ -126,6 +136,14 @@ public class StateCensusAnalyserTester {
 		} catch (CensusAnalyserException e) {
 			assertEquals(ExceptionType.HEADER_INCORRECT, e.getExceptionType());
 		}
+		
+	}
+	
+	@Test
+	public void GivenCensusCSVData_WhenSortedAccordingToStateName_ShouldReturnSortedList() {
+		List<CSVStateCensus> returnedList= stateCensusAnalyser.sortStateCensusDataAccordingToStateInAlphabeticalOrder("D:\\Capg_Bridgelabz\\IndiaCensus\\StateCensusData.csv");
+		assertEquals("Andaman and Nicobar Islands",returnedList.get(0).state);
+		assertEquals("West Bengal",returnedList.get(returnedList.size()-1).state);
 		
 	}
 
