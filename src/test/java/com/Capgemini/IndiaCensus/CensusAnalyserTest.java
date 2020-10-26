@@ -13,7 +13,7 @@ public class CensusAnalyserTest {
 	private static final String WRONG_TYPE_FILE_PATH = "D:\\Capg_Bridgelabz\\IndiaCensus\\StateCensusData.txt";
 	private static final String WRONG_DELIMITER_PATH = "D:\\Capg_Bridgelabz\\IndiaCensus\\StateCensusWrongDelimiter.csv";
 	private static final String WRONG_HEADER_PATH = "D:\\Capg_Bridgelabz\\IndiaCensus\\StateCensusWrongHeader.csv";
-	
+
 	private static final String INDIA_STATE_CODE_CSV_FILE_PATH = "D:\\Capg_Bridgelabz\\IndiaCensus\\StateCode.csv";
 	private static final String STATE_CODE_WRONG_FILE_PATH = "D:\\Capg_Bridgelabz\\IndiaCensus\\StateCodeData.csv";
 	private static final String STATE_CODE_WRONG_TYPE_FILE_PATH = "D:\\Capg_Bridgelabz\\IndiaCensus\\StateCode.txt";
@@ -44,7 +44,7 @@ public class CensusAnalyserTest {
 		} catch (CensusAnalyserException e) {
 			Assert.assertEquals(e.getExceptionType(), CensusAnalyserException.ExceptionType.WRONG_FILE_PATH);
 		} catch (IOException e) {
-			e.getMessage();
+			e.printStackTrace();
 		}
 	}
 
